@@ -1,0 +1,27 @@
+---
+
+- name: Reconfigure Cockroach Cluster Dev Env
+  hosts: "{{ target }}"
+  become: yes
+  tasks:
+
+    - name: Add user
+      user:
+        name: cockroach
+
+    - name: Create work direcotory
+      file:
+       path: /var/lib/cockroach
+       state: directory
+       owner: cockroach
+
+    - name: Download and unarchive CockroachDB
+      unarchive:
+        src: https://binaries.cockroachdb.com/cockroach-v19.2.2.linux-amd64.tgz
+        dest: /usr/local/bin
+        remote_src: yes
+
+    - name: Copy CockroachDB systemd unit
+      copy:
+        src: /home/vagrant/devopsconfig/SystemD/cockroachdbinsecure.service
+        dest: /etc/systemd/system/cockroachdbinsecure.service
