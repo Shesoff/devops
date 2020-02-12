@@ -1,0 +1,16 @@
+---
+
+- name: install package
+  hosts: all
+  tasks:
+
+    - name: install policycoreutils-python
+      package:
+        name: policycoreutils-python
+        state: present
+
+    - name: Firewalld rule for zabbix-agent
+      firewalld:
+        service: zabbix-agent
+        permanent: yes
+        state: enabled
