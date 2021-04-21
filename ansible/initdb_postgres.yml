@@ -53,7 +53,7 @@
           failed_when: "'ERROR' in pg_restore_result.stderr"
         - name: Print restore result  
           ansible.builtin.debug:
-            msg: "{{ pg_restore_result.split('\n') }}"
+            msg: "{{ pg_restore_result }}"
       rescue:
         - name: Rollback database
           community.postgresql.postgresql_db:
